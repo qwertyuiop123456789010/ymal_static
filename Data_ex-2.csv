@@ -1,0 +1,11 @@
+ID,Name,Age,Score,Category,Salary,Department,Joining Year
+1,John,28,85,Science,50000,HR,2015
+2,Alice,22,92,Arts,60000,Marketing,2018
+3,Bob,30,76,Science,NaN,Sales,2017
+4,Carol,25,88,Arts,70000,HR,NaN
+5,David,NaN,95,Science,75000,Marketing,2016
+6,Eve,29,78,Arts,65000,Sales,2020
+7,Frank,40,NaN,Science,52000,HR,2014
+8,Grace,33,91,Arts,67000,Marketing,2017
+9,Henry,NaN,89,Science,56000,Sales,2019
+10,Isla,24,85,Arts,63000,HR,NaN
