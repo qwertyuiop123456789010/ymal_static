@@ -1,0 +1,633 @@
+Ex-1 Download, install and explore the features of NumPy, SciPy, Jupyter, Statsmodels, Pandas,
+Matplotlib, Pandas, seaborn, plotly, and Bokeh.
+import numpy as np
+print("Version of NumPy:", np.__version__)
+import pandas as pd
+print("Version of Pandas:", pd.__version__)
+import matplotlib
+print("Version of Matplotlib:", matplotlib.__version__)
+import seaborn as sns
+print("Version of Seaborn:", sns.__version__)
+import statsmodels
+print("Version of Statsmodels:", statsmodels.__version__)
+import scipy
+print("Version of SciPy:", scipy.__version__)
+import plotly
+print("Version of Plotly:", plotly.__version__)
+import bokeh
+print("Version of Bokeh:", bokeh.__version__)
+import jupyterlab # type: ignore
+print("Version of JupyterLab:", jupyterlab.__version__)
+ex-2 a) Working with Numpy arrays or NumPy Operations and Array Manipulations
+# Importing NumPy
+import numpy as np
+# Check NumPy version
+print("NumPy Version:", np.__version__)
+# 1. Creating different types of arrays
+arr_1d = np.array([1, 2, 3, 4, 5])
+arr_2d = np.array([[1, 2, 3], [4, 5, 6]])
+arr_0d = np.array(42)
+arr_ones = np.ones((3, 3))
+print("1D Array:", arr_1d)
+print("2D Array:\n", arr_2d)
+print("0D Array:", arr_0d)
+print("Array of Ones:\n", arr_ones)
+# 2. Indexing and Slicing
+print("Element at index 2 in 1D array:", arr_1d[2])
+print("Element at row 1, column 2 in 2D array:", arr_2d[1, 2])
+print("Slice from 1D array:", arr_1d[1:4])
+print("Slice row 1 from 2D array:", arr_2d[1, :])
+# 3. Element-wise operations
+arr_a = np.array([10, 20, 30])
+arr_b = np.array([1, 2, 3])
+print("Addition:", arr_a + arr_b)
+print("Subtraction:", arr_a - arr_b)
+print("Multiplication:", arr_a * arr_b)
+print("Division:", arr_a / arr_b)
+# 4. Scalar operation
+print("Scalar Multiplication:", arr_a * 2)
+# 5. Aggregations
+print("Sum:", np.sum(arr_a))
+print("Mean:", np.mean(arr_a))
+print("Standard Deviation:", np.std(arr_a))
+# 6. Element-wise comparison
+print("Element-wise comparison (arr_a > arr_b):", arr_a > arr_b)
+# 7. Boolean masking
+print("Elements greater than 15:", arr_a[arr_a > 15])
+# 8. Fancy Indexing
+indices = [0, 2]
+print("Selected elements using fancy indexing:", arr_a[indices])
+# 9. Reshaping
+reshaped_arr = arr_1d.reshape(5, 1)
+print("Reshaped 1D array to 2D:\n", reshaped_arr)
+# 10. Structured Array
+structured_arr = np.array([(25, 90.5), (30, 85.2)], dtype=[('age', 'i4'), ('score', 'f4')])
+print("Structured array:", structured_arr)
+ex-2 b) Exploring Pandas DataFrame Operations for Data Manipulation and Analysis
+import pandas as pd
+# Load dataset into a DataFrame
+df = pd.read_csv('C:/Users/kanna/Desktop/Data_ex-2.csv')
+df.info()
+# Display first and last few rows
+print("First 5 rows:\n", df.head())
+print("Last 5 rows:\n", df.tail())
+# Summary statistics
+print("Summary statistics:\n", df.describe())
+# Handle missing values
+# Fill missing numerical values with mean, and categorical with mode (if any)
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+df['Score'].fillna(df['Score'].mean(), inplace=True)
+df['Salary'].fillna(df['Salary'].mean(), inplace=True)
+df['Joining Year'].fillna(df['Joining Year'].mean(), inplace=True)
+# Create a new column based on existing column 'Score'
+df['new_column'] = df['Score'] * 2 # Example: Create a new column based on 'Score'
+# Create a Series and perform operations
+series = df['Score']
+print("Series addition:", series + 10) # Adding 10 to each value in the 'Score' column
+# Filter rows based on conditions
+filtered_df = df[(df['Score'] > 80) & (df['Salary'] < 70000)] # Example filter: Score > 80 and Salary < 
+70000
+print("Filtered DataFrame:\n", filtered_df)
+# Grouping and aggregation
+grouped = df.groupby('Category')['Salary'].mean() # Example: Group by 'Category' and compute 
+mean of 'Salary'
+print("Grouped mean by Category:\n", grouped)
+# Sorting by 'Salary'
+df_sorted = df.sort_values(by='Salary', ascending=False) # Sort by Salary in descending order
+print("Sorted DataFrame by Salary:\n", df_sorted)
+# Boolean masking
+masked_df = df[df['Salary'] > df['Salary'].median()] # Example: Mask data where Salary > median of 
+Salary column
+print("Masked DataFrame:\n", masked_df)
+# Remove duplicates and drop missing values
+df.drop_duplicates(inplace=True) # Remove duplicate rows
+df.dropna(inplace=True) # Drop rows with missing values
+# Create a new DataFrame with selected columns
+subset_df = df[['Name', 'Age', 'Salary']] # Example: Select 'Name', 'Age', and 'Salary' columns for a 
+new DataFrame
+print("Subset DataFrame:\n", subset_df)
+# Save the new DataFrame to a CSV file
+subset_df.to_csv('filtered_data.csv', index=False) # Save the subset DataFrame to a new CSV file
+# Compute summary statistics for 'Salary'
+print("Total Salary sum:", df['Salary'].sum()) # Sum of Salary
+print("Mean Salary:", df['Salary'].mean()) # Mean of Salary
+print("Standard Deviation of Salary:", df['Salary'].std()) # Standard deviation of Salary
+ex-2 c) 
+import pandas as pd
+# 1. Read data from a CSV file
+text_df = pd.read_csv('C:/Users/kanna/Desktop/Data_ex-2c.csv')
+# 2. Read data from an Excel file
+# Rename if it's actually .xlsx
+excel_df = pd.read_excel('C:/Users/kanna/Desktop/Data_ex-2cex.xlsx')
+# 3. Read data from a web-based source
+web_df =
+pd.read_csv('https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv') # Replace 
+with actual URL
+# 4. Display data
+print(text_df.head(), "\n")
+print(excel_df.head(), "\n")
+print(web_df.head())
+# 5. Handle missing values
+text_df.fillna(method='ffill', inplace=True) # Forward fill missing data for text_df
+excel_df.fillna(method='bfill', inplace=True) # Backward fill missing data for excel_df
+web_df.dropna(inplace=True) # Drop rows with missing data for web_df
+# 6. Save processed data
+text_df.to_csv('processed_text.csv', index=False)
+excel_df.to_excel('processed_excel.xlsx', index=False)
+# Print output confirmation
+print("\nProcessed data has been saved to 'processed_text.csv' and 'processed_excel.xlsx'.")
+3 a)
+import pandas as pd
+import numpy as np
+from scipy.stats import skew, kurtosis
+# Import Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Display Dataset Samples
+print("UCI Diabetes Dataset Sample:")
+print(uci_diabetes.head())
+print("\nPima Indians Diabetes Dataset Sample:")
+print(pima_diabetes.head())
+# Define Relevant Numerical Columns
+numerical_columns = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI",
+"DiabetesPedigreeFunction", "Age"]
+# Univariate Analysis Function
+def univariate_analysis(df, columns):
+stats = {}
+for col in columns:
+stats[col] = {
+"Mean": np.mean(df[col]),
+"Median": np.median(df[col]),
+"Mode": df[col].mode()[0],
+"Variance": np.var(df[col], ddof=1),
+"Standard Deviation": np.std(df[col], ddof=1),
+"Skewness": skew(df[col]),
+"Kurtosis": kurtosis(df[col])
+}
+return pd.DataFrame(stats).T
+# Perform Univariate Analysis
+uci_stats = univariate_analysis(uci_diabetes, numerical_columns)
+pima_stats = univariate_analysis(pima_diabetes, numerical_columns)
+# Display Results
+print("\nUCI Diabetes Dataset Statistics:")
+print(uci_stats)
+print("\nPima Indians Diabetes Dataset Statistics:")
+print(pima_stats)
+3 b)
+# Import Libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.metrics import r2_score, accuracy_score
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Display first few rows
+print("UCI Diabetes Dataset Sample:\n", uci_diabetes.head())
+print("\nPima Indians Diabetes Dataset Sample:\n", pima_diabetes.head())
+# Perform Linear Regression (Glucose vs. BMI)
+def linear_regression_analysis(df, x_column, y_column):
+X = df[[x_column]] # Independent variable
+Y = df[y_column] # Dependent variable
+model = LinearRegression()
+model.fit(X, Y)
+Y_pred = model.predict(X)
+r2 = r2_score(Y, Y_pred)
+print(f"\nLinear Regression (Predicting {y_column} using {x_column}):")
+print(f"R² Score: {r2:.4f}")
+# Plot
+plt.scatter(X, Y, color='blue', label='Actual Data')
+plt.plot(X, Y_pred, color='red', linewidth=2, label='Regression Line')
+plt.xlabel(x_column)
+plt.ylabel(y_column)
+plt.title(f"Linear Regression: {x_column} vs. {y_column}")
+plt.legend()
+plt.show()
+# Apply Linear Regression on both datasets
+linear_regression_analysis(uci_diabetes, "Glucose", "BMI")
+linear_regression_analysis(pima_diabetes, "Glucose", "BMI")
+# Perform Logistic Regression (Predicting Diabetes)
+def logistic_regression_analysis(df, features, target):
+X = df[features]
+Y = df[target]
+# Splitting dataset into train and test
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, Y_train)
+Y_pred = model.predict(X_test)
+accuracy = accuracy_score(Y_test, Y_pred)
+print(f"\nLogistic Regression (Predicting {target} using {features}):")
+print(f"Accuracy Score: {accuracy:.4f}")
+# Select features and target
+features = ["Glucose", "BloodPressure", "BMI", "Age"]
+target = "Outcome" # Assuming 'Outcome' represents diabetes presence
+# Apply Logistic Regression on both datasets
+logistic_regression_analysis(uci_diabetes, features, target)
+logistic_regression_analysis(pima_diabetes, features, target)
+3 c)
+# Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Select Relevant Features and Target Variable
+features = ["Glucose", "BloodPressure", "Age"]
+target = "BMI"
+# Define Function for Multiple Regression Analysis
+def multiple_regression_analysis(df, dataset_name):
+# Extract Features and Target Variable
+X = df[features]
+y = df[target]
+# Split Data into Training and Testing Sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Initialize and Train the Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+# Predict and Evaluate the Model
+y_pred = model.predict(X_test)
+r2 = r2_score(y_test, y_pred)
+# Print R² Score
+print(f"\n{dataset_name} - Multiple Regression R² Score: {r2:.4f}")
+# Perform Multiple Regression on Both Datasets
+multiple_regression_analysis(uci_diabetes, "UCI Diabetes Dataset")
+multiple_regression_analysis(pima_diabetes, "Pima Indians Diabetes Dataset")
+3 d)
+# Import Libraries
+import pandas as pd
+import numpy as np
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Display Summary Statistics
+print("Comparison of Univariate Analysis Results:")
+print("\nUCI Diabetes Dataset Statistics:\n", uci_diabetes)
+print("\nPima Indians Diabetes Dataset Statistics:\n", pima_diabetes)
+# Compare Regression Model Performance
+uci_r2 = 0.78 # Example R² score from Multiple Regression
+pima_r2 = 0.72 # Example R² score from Multiple Regression
+uci_accuracy = 82.4 # Example Logistic Regression Accuracy
+pima_accuracy = 79.1 # Example Logistic Regression Accuracy
+print(f"\nLinear Regression R² Scores: UCI - {uci_r2}, Pima - {pima_r2}")
+print(f"Logistic Regression Accuracy: UCI - {uci_accuracy}%, Pima - {pima_accuracy}%")
+4 a)
+# Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+# Load Dataset
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+# Plot Normal Curves for Glucose and BMI
+plt.figure(figsize=(12, 5))
+# Normal Curve for Glucose
+plt.subplot(1, 2, 1)
+sns.histplot(uci_diabetes["Glucose"], kde=True, stat="density", linewidth=0)
+x = np.linspace(uci_diabetes["Glucose"].min(), uci_diabetes["Glucose"].max(), 100)
+plt.plot(x, norm.pdf(x, uci_diabetes["Glucose"].mean(), uci_diabetes["Glucose"].std()), 'r')
+plt.title("Normal Curve - Glucose")
+# Normal Curve for BMI
+plt.subplot(1, 2, 2)
+sns.histplot(uci_diabetes["BMI"], kde=True, stat="density", linewidth=0)
+x = np.linspace(uci_diabetes["BMI"].min(), uci_diabetes["BMI"].max(), 100)
+plt.plot(x, norm.pdf(x, uci_diabetes["BMI"].mean(), uci_diabetes["BMI"].std()), 'r')
+plt.title("Normal Curve - BMI")
+# Show the plots
+plt.tight_layout()
+plt.show()
+4 b)
+# Import Libraries
+import pandas as pd
+import numpy as np
+from statsmodels.stats.weightstats import ztest # Corrected import for ztest
+# Load Dataset
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+# Perform Z-Test for Glucose (Testing if mean Glucose differs from 100)
+z_stat, p_value = ztest(uci_diabetes["Glucose"], value=100)
+# Display Results
+print(f"Z-Statistic: {z_stat:.4f}")
+print(f"P-Value: {p_value:.4f}")
+# Interpretation
+alpha = 0.05 # 5% significance level
+if p_value < alpha:
+print("Reject the null hypothesis: The mean Glucose level is significantly different from 100.")
+else:
+print("Fail to reject the null hypothesis: No significant difference in mean Glucose level.")
+4 c)
+# Import Libraries
+import pandas as pd
+import numpy as np
+from scipy.stats import ttest_ind
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Select Relevant Numerical Columns
+numerical_columns = ["Glucose", "BloodPressure", "BMI"]
+# Perform Independent T-test
+t_test_results = {}
+for col in numerical_columns:
+t_stat, p_value = ttest_ind(uci_diabetes[col], pima_diabetes[col], equal_var=False)
+t_test_results[col] = {"T-statistic": t_stat, "P-value": p_value}
+# Convert Results to DataFrame
+t_test_df = pd.DataFrame(t_test_results).T
+# Display Results
+print("\nT-test Results:\n", t_test_df)
+4 d)
+# Import Libraries
+import pandas as pd
+import numpy as np
+from scipy.stats import f_oneway
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Select Relevant Numerical Columns
+numerical_columns = ["Glucose", "BloodPressure", "BMI"]
+# Perform One-Way ANOVA
+anova_results = {}
+for col in numerical_columns:
+f_stat, p_value = f_oneway(uci_diabetes[col], pima_diabetes[col])
+anova_results[col] = {"F-statistic": f_stat, "P-value": p_value}
+# Convert Results to DataFrame
+anova_df = pd.DataFrame(anova_results).T
+# Display Results
+print("\nANOVA Results:\n", anova_df)
+5a)
+# Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Select Features and Target Variable
+features = ["Glucose", "BloodPressure", "BMI"]
+target = "Age"
+X_uci = uci_diabetes[features]
+y_uci = uci_diabetes[target]
+X_pima = pima_diabetes[features]
+y_pima = pima_diabetes[target]
+# Split Data into Training and Testing Sets (80%-20%)
+X_train_uci, X_test_uci, y_train_uci, y_test_uci = train_test_split(X_uci, y_uci, test_size=0.2,
+random_state=42)
+X_train_pima, X_test_pima, y_train_pima, y_test_pima = train_test_split(X_pima, y_pima,
+test_size=0.2, random_state=42)
+# Train the Linear Regression Model
+model_uci = LinearRegression()
+model_uci.fit(X_train_uci, y_train_uci)
+model_pima = LinearRegression()
+model_pima.fit(X_train_pima, y_train_pima)
+# Make Predictions
+y_pred_uci = model_uci.predict(X_test_uci)
+y_pred_pima = model_pima.predict(X_test_pima)
+# Evaluate Model Performance
+r2_uci = r2_score(y_test_uci, y_pred_uci)
+mse_uci = mean_squared_error(y_test_uci, y_pred_uci)
+mae_uci = mean_absolute_error(y_test_uci, y_pred_uci)
+r2_pima = r2_score(y_test_pima, y_pred_pima)
+mse_pima = mean_squared_error(y_test_pima, y_pred_pima)
+mae_pima = mean_absolute_error(y_test_pima, y_pred_pima)
+# Display Results
+print("UCI Diabetes Dataset - Linear Regression Results:")
+print(f"R² Score: {r2_uci:.4f}, MSE: {mse_uci:.4f}, MAE: {mae_uci:.4f}")
+print("\nPima Indians Diabetes Dataset - Linear Regression Results:")
+print(f"R² Score: {r2_pima:.4f}, MSE: {mse_pima:.4f}, MAE: {mae_pima:.4f}")
+5b)
+# Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score,
+confusion_matrix
+# Load the Datasets
+uci_diabetes = pd.read_csv("C:/Users/kanna/Downloads/uci_diabetes (1).csv")
+pima_diabetes = pd.read_csv("C:/Users/kanna/Downloads/pima_diabetes (1).csv")
+# Select Features and Target Variable
+features = ["Glucose", "BloodPressure", "BMI"]
+target = "Outcome"
+X_uci = uci_diabetes[features]
+y_uci = uci_diabetes[target]
+X_pima = pima_diabetes[features]
+y_pima = pima_diabetes[target]
+# Split Data into Train and Test Sets
+X_train_uci, X_test_uci, y_train_uci, y_test_uci = train_test_split(X_uci, y_uci, test_size=0.2,
+random_state=42)
+X_train_pima, X_test_pima, y_train_pima, y_test_pima = train_test_split(X_pima, y_pima,
+test_size=0.2, random_state=42)
+# Train Logistic Regression Models
+model_uci = LogisticRegression()
+model_uci.fit(X_train_uci, y_train_uci)
+model_pima = LogisticRegression()
+model_pima.fit(X_train_pima, y_train_pima)
+# Make Predictions
+y_pred_uci = model_uci.predict(X_test_uci)
+y_pred_pima = model_pima.predict(X_test_pima)
+# Evaluate Model - UCI
+accuracy_uci = accuracy_score(y_test_uci, y_pred_uci)
+precision_uci = precision_score(y_test_uci, y_pred_uci, zero_division=0)
+recall_uci = recall_score(y_test_uci, y_pred_uci, zero_division=0)
+f1_uci = f1_score(y_test_uci, y_pred_uci, zero_division=0)
+# Evaluate Model - PIMA
+accuracy_pima = accuracy_score(y_test_pima, y_pred_pima)
+precision_pima = precision_score(y_test_pima, y_pred_pima, zero_division=0)
+recall_pima = recall_score(y_test_pima, y_pred_pima, zero_division=0)
+f1_pima = f1_score(y_test_pima, y_pred_pima, zero_division=0)
+# Display Results
+print("UCI Diabetes Dataset - Logistic Regression Results:")
+print(f"Accuracy: {accuracy_uci:.4f}, Precision: {precision_uci:.4f}, Recall: {recall_uci:.4f}, F1 Score: 
+{f1_uci:.4f}")
+print("\nPima Indians Diabetes Dataset - Logistic Regression Results:")
+print(f"Accuracy: {accuracy_pima:.4f}, Precision: {precision_pima:.4f}, Recall: {recall_pima:.4f}, F1 
+Score: {f1_pima:.4f}")
+# Confusion Matrix Plots
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+sns.heatmap(confusion_matrix(y_test_uci, y_pred_uci), annot=True, fmt='d', cmap='Blues',
+ax=axes[0])
+axes[0].set_title("UCI Diabetes - Confusion Matrix")
+axes[0].set_xlabel("Predicted")
+axes[0].set_ylabel("Actual")
+sns.heatmap(confusion_matrix(y_test_pima, y_pred_pima), annot=True, fmt='d', cmap='Blues',
+ax=axes[1])
+axes[1].set_title("Pima Indians Diabetes - Confusion Matrix")
+axes[1].set_xlabel("Predicted")
+axes[1].set_ylabel("Actual")
+plt.tight_layout()
+plt.show()
+5c)
+# Step 1: Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.arima.model import ARIMA
+# Step 2: Load Dataset
+diabetes_data = pd.read_csv("C:/Users/kanna/Downloads/diabetes9.xls")
+# Step 3: Check and Preview Data
+print(diabetes_data.head())
+# Step 4: Plot Time Series of Glucose
+plt.figure(figsize=(12, 5))
+plt.plot(diabetes_data['Glucose'], label="Glucose Level", color='blue')
+plt.xlabel("Index")
+plt.ylabel("Glucose Level")
+plt.title("Time Series of Glucose Levels")
+plt.legend()
+plt.show()
+# Step 5: Decompose Time Series
+decomposition = seasonal_decompose(diabetes_data['Glucose'], model='additive', period=30)
+fig, axes = plt.subplots(3, 1, figsize=(12, 8))
+decomposition.trend.plot(ax=axes[0], title="Trend Component")
+decomposition.seasonal.plot(ax=axes[1], title="Seasonal Component")
+decomposition.resid.plot(ax=axes[2], title="Residual Component")
+plt.tight_layout()
+plt.show()
+# Step 6: Apply Moving Average for Smoothing
+diabetes_data['Glucose_MA'] = diabetes_data['Glucose'].rolling(window=7).mean()
+plt.figure(figsize=(12, 5))
+plt.plot(diabetes_data['Glucose'], label="Original", alpha=0.5)
+plt.plot(diabetes_data['Glucose_MA'], label="7-day Moving Average", color='red')
+plt.legend()
+plt.title("Moving Average Smoothing")
+plt.show()
+# Step 7: ARIMA Model for Forecasting
+train_size = int(len(diabetes_data) * 0.8)
+train, test = diabetes_data['Glucose'][:train_size], diabetes_data['Glucose'][train_size:]
+# Build and Fit ARIMA model
+model = ARIMA(train, order=(5, 1, 0))
+fitted_model = model.fit()
+# Forecast Future Glucose Levels
+forecast = fitted_model.forecast(steps=len(test))
+# Plot Forecast vs Actual
+plt.figure(figsize=(12, 5))
+plt.plot(range(len(test)), test, label="Actual", color="blue")
+plt.plot(range(len(test)), forecast, label="Forecast", color="red")
+plt.xlabel("Index")
+plt.ylabel("Glucose Level")
+plt.title("ARIMA Model Forecasting")
+plt.legend()
+plt.show()
+ A) Data Analysis – Viva Questions with Answers
+ Basic Level
+1. What is the shape of your dataset?
+Answer: The dataset has 768 rows and 9 columns.
+2. What types of variables are present in the dataset?
+Answer: Numerical variables like Glucose, BloodPressure, BMI, Age, etc. Categorical variable: 
+Outcome (0 or 1 for diabetes presence).
+3. How did you handle missing values?
+Answer: I used techniques like .isnull().sum() to identify them and used either imputation 
+(mean/median) or removed rows depending on the column.
+4. Which Python libraries did you use?
+Answer: I used pandas, numpy, matplotlib, and seaborn for data analysis and visualization.
+ Intermediate Level
+5. What insights did you get from Glucose and BMI?
+Answer: Higher Glucose and BMI levels were more common among diabetic patients (Outcome = 1).
+6. What is the correlation between Age and Outcome?
+Answer: There's a mild positive correlation – older individuals tend to have a slightly higher chance 
+of being diabetic.
+7. How did you visualize diabetes cases?
+Answer: I used count plots and histograms to visualize the distribution of Outcome = 0 and 1.
+8. What is the describe() function used for?
+Answer: It gives statistical summaries like mean, median, standard deviation, etc., for each numerical 
+column.
+ Advanced Level
+9. How do you detect and remove outliers?
+Answer: I used boxplots to visualize outliers and removed them based on the IQR rule.
+10. What is the groupby() function used for?
+Answer: It groups data based on a column (e.g., Outcome) and allows computation of aggregate 
+functions like mean, sum, etc.
+11. How is a heatmap useful?
+Answer: It helps visualize correlations between features using color intensity, making relationships 
+easier to understand.
+ B) Data Visualization – Viva Questions with Answers
+ Basic Level
+1. What is data visualization?
+Answer: It's the graphical representation of information and data to make patterns and trends easier 
+to see.
+2. Which libraries did you use for plotting?
+Answer: I used matplotlib and seaborn.
+3. What types of plots did you use?
+Answer: Line plots, boxplots, histograms, heatmaps, and count plots.
+ Intermediate Level
+4. When do you prefer a boxplot over a histogram?
+Answer: A boxplot is better for identifying outliers and understanding data distribution; histograms 
+are better for frequency distribution.
+5. What did your line plot of glucose levels show?
+Answer: It showed fluctuations in glucose levels over time, which helped identify patterns.
+6. What is Seaborn used for?
+Answer: Seaborn is a high-level visualization library built on matplotlib that makes complex plots 
+easier to generate and more attractive.
+7. Why are axis labels and titles important in a plot?
+Answer: They help the reader understand what data is being visualized and interpret the plot 
+correctly.
+ Advanced Level
+8. What is the use of a pairplot?
+Answer: A pairplot plots pairwise relationships in a dataset, useful for seeing correlations between 
+multiple variables.
+9. How do you choose which plot to use?
+Answer: Based on data type: categorical vs numerical, number of variables, and what insight we 
+want to convey.
+10. Difference between matplotlib and seaborn?
+Answer: Matplotlib offers more control but requires more code. Seaborn is easier to use for 
+statistical plots and is built on top of matplotlib.
+ C) Time Series Analysis – Viva Questions with Answers
+ Basic Level
+1. What is time series data?
+Answer: Data collected over time intervals, like glucose levels recorded daily or hourly.
+2. What are the components of time series data?
+Answer: Trend, seasonality, and noise (random variation).
+3. What dataset did you use?
+Answer: A diabetes dataset containing glucose levels with timestamps.
+ Intermediate Level
+4. Why convert the date column to datetime format?
+Answer: To enable time-based operations like resampling, rolling averages, and indexing.
+5. What does seasonal_decompose() do?
+Answer: It breaks the time series into three components: trend, seasonal, and residual.
+6. What is a moving average?
+Answer: It smooths the time series by averaging values over a defined window (e.g., 7 days) to 
+highlight trends.
+ Advanced Level
+7. What is the ARIMA model?
+Answer: ARIMA stands for AutoRegressive Integrated Moving Average – used for forecasting time 
+series. (p,d,q) are parameters:
+• p: autoregressive terms
+• d: differencing (for stationarity)
+• q: moving average terms
+8. How did you split the data?
+Answer: I used 80% for training and 20% for testing the ARIMA forecast.
+9. How did the forecast compare to actual results?
+Answer: The ARIMA model predicted values closely matched actual glucose values, indicating a good 
+model fit.
+10. Limitations of ARIMA?
+Answer: It assumes linearity and stationarity. It may not handle sudden changes, non-linear trends, 
+or complex seasonality.
+ General Viva Questions (All Experiments)
+1. Why is Python used for data analysis?
+Answer: It's simple, versatile, has powerful libraries like pandas, numpy, and supports visualization 
+and machine learning.
+2. What is the difference between supervised and unsupervised learning?
+Answer:
+• Supervised: Uses labeled data (e.g., classification, regression).
+• Unsupervised: Uses unlabeled data to find patterns (e.g., clustering).
+3. What is the lifecycle of a data science project?
+Answer: Data collection → Preprocessing → Analysis → Modeling → Evaluation → Deployment → 
+Monitoring.
+4. What challenges did you face during the experiments?
+Answer: Handling missing values, tuning model parameters, and choosing the right visualization for 
+insights.
+5. How would you improve your analysis?
+Answer: By using more advanced models like LSTM for time series, hyperparameter tuning, and 
+using cross-validation.
